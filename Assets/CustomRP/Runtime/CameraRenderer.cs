@@ -15,7 +15,8 @@ public partial class CameraRenderer {
     CullingResults cullingResults;
     private static ShaderTagId unlitShaderTagId = new ShaderTagId("SRPDefaultUnlit");
 
-    public void Render (ScriptableRenderContext context, Camera camera) {
+    public void Render (ScriptableRenderContext context, Camera camera,
+        bool useDynamicBatching, bool useGPUInstancing) {
         this.context = context;
         this.camera = camera;
         Profiler.BeginSample("Editor Only");
@@ -24,9 +25,9 @@ public partial class CameraRenderer {
         PrepareForSceneWindow();
         if (!Cull()) {
             return;
-        }
+        }   
         Setup();
-        DrawVisibleGeometry();
+        DrawVisibleGeometry(useDynamicBatching,useGPUInstancing);
         // #if UNITY_EDITOR
             DrawUnsupportedShaders();
             DrawGizmos();
@@ -42,12 +43,12 @@ public partial class CameraRenderer {
         ExecuteBuffer();
         // context.SetupCameraProperties(camera);
     }
-    void DrawVisibleGeometry ()
+    void DrawVisibleGeometry (bool useDynamicBatching, bool useGPUInstancing)
     {
         var sortingSettings = new SortingSettings(camera){criteria = SortingCriteria.CommonOpaque};
         var drawingSettings = new DrawingSettings(unlitShaderTagId,sortingSettings){
-            enableDynamicBatching = true,
-            enableInstancing = false
+            enableDynamicBatching = useDynamicBatching,
+            enableInstancing = useGPUInstancing
         };
         var filteringSettings = new FilteringSettings(RenderQueueRange.opaque);
 
