@@ -8,8 +8,8 @@ public class CustomRenderPipeline : RenderPipeline
     
     public CustomRenderPipeline (bool useDynamicBatching, bool useGPUInstancing,bool useSRPBatcher)
     {
-        this.useDynamicBatching = this.useDynamicBatching;
-        this.useGPUInstancing = this.useGPUInstancing;
+        this.useDynamicBatching = useDynamicBatching;
+        this.useGPUInstancing = useGPUInstancing;
         GraphicsSettings.useScriptableRenderPipelineBatching = useSRPBatcher;
     }
     protected override void Render(ScriptableRenderContext context, Camera[] cameras)
