@@ -17,6 +17,7 @@ public partial class CameraRenderer {
         new ShaderTagId("VertexLMRGBM"),
         new ShaderTagId("VertexLM")
     };
+    
     static Material errorMaterial;
     partial void DrawGizmos () {
         if (Handles.ShouldRenderGizmos()) {

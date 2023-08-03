@@ -14,6 +14,7 @@ public partial class CameraRenderer {
     };
     CullingResults cullingResults;
     private static ShaderTagId unlitShaderTagId = new ShaderTagId("SRPDefaultUnlit");
+    private static ShaderTagId litShaderTagId = new ShaderTagId("CustomLit");
 
     public void Render (ScriptableRenderContext context, Camera camera,
         bool useDynamicBatching, bool useGPUInstancing) {
@@ -50,6 +51,7 @@ public partial class CameraRenderer {
             enableDynamicBatching = useDynamicBatching,
             enableInstancing = useGPUInstancing
         };
+        drawingSettings.SetShaderPassName(1, litShaderTagId);
         var filteringSettings = new FilteringSettings(RenderQueueRange.opaque);
 
         context.DrawRenderers(
